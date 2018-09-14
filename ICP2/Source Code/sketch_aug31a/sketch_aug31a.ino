@@ -102,7 +102,7 @@ void loop(){
   start: //label 
   error=0;
   delay(1000);
-  updatebeat();
+  //updatebeat();
   //Resend if transmission is not completed 
   if (error==1){
     goto start; //go to label "start"
@@ -128,16 +128,16 @@ void updatebeat(){
   esp8266.print("AT+CIPSEND=");
   Serial.println(cmd.length());
   esp8266.println(cmd.length());
-  if(esp8266.find(">")){
+ // if(esp8266.find(">")){
     Serial.print(cmd);
     esp8266.print(cmd);
-  }
-  else{
-   Serial.println("AT+CIPCLOSE");
-   esp8266.println("AT+CIPCLOSE");
-    //Resend...
-    error=1;
-  }
+ // }
+  //else{
+  // Serial.println("AT+CIPCLOSE");
+   //esp8266.println("AT+CIPCLOSE");
+   // //Resend...
+   // error=1;
+  //}
 }
 
 boolean connectWiFi(){
