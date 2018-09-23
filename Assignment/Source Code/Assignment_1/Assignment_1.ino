@@ -483,19 +483,7 @@ void loop() {
 }
 
 void sendData(float val, int type){
-  //start building AT command
-  String cmd = "AT+CIPSTART=\"TCP\",\"";
-  cmd += "io.adafruit.com";
-  cmd += "\",1883";
-
-  //print out AT command to serial and send to esp8266
-  //Serial.println(cmd);
-  esp8266.println(cmd);
-  delay(2000);
-  if(esp8266.find("Error")){
-    return;
-  }
-
+  
   //build http request
   String AIOkey = "30ffc0735e414c7d897975b3dc5a9b47";
   String feed;
@@ -529,28 +517,14 @@ void sendData(float val, int type){
   String data = String("{\"value\":") + "\"" + value + "\"}";
   String datalen = (String)(data.length());
   //finish building http request
-  cmd = "POST /api/feeds/" + feed + "/data?X-AIO-Key=" + AIOkey + " HTTP/1.0\n"
+  String cmd = "POST /api/feeds/" + feed + "/data?X-AIO-Key=" + AIOkey + " HTTP/1.0\n"
   +"Host: io.adafruit.com\n"
   +"Content-Type: application/json\n"
   +"Content-Length: " + datalen + "\n\n"
   + data;
   
-
-  //print command to serial and send to esp8266
-  //Serial.print("AT+CIPSEND=");
-  esp8266.print("AT+CIPSEND=");
-  //Serial.println(cmd.length());
-  esp8266.println(cmd.length());
-  if(esp8266.find(">")){
-    //Serial.print(cmd);
-    esp8266.print(cmd);
-  }
-  else{
-   //Serial.println("AT+CIPCLOSE");
-   esp8266.println("AT+CIPCLOSE");
-    //Resend...
-    error=1;
-  }
+  esp8266.print(cmd);
+  
   //delay(1000);
 }
 
