@@ -483,66 +483,48 @@ void loop() {
 }
 
 void sendData(float val, int type){
-  //start building AT command
-  String cmd = "AT+CIPSTART=\"TCP\",\"";
-  cmd += IP;
-  cmd += "\",80";
-
-  //print out AT command to serial and send to esp8266
-  //Serial.println(cmd);
-  esp8266.println(cmd);
-  delay(2000);
-  if(esp8266.find("Error")){
-    return;
-  }
-
-  //begin building command
-  cmd = msg ;
-  //add the correct field for whatever type of data we read
+  
+  //build http request
+  String AIOkey = "30ffc0735e414c7d897975b3dc5a9b47";
+  String feed;
+  //add the correct feed for whatever type of data we read
   switch(type){
     case 1: //humidity
-      cmd += "&field1=";
+      feed = "humidity";
       break;
     case 2: //temperature
-      cmd += "&field2=";
+      feed = "temperature";
       break;
     case 3: //light
-      cmd += "&field3=";
+      feed = "light";
       break;
     case 4: //dust
-      cmd += "&field4=";
+      feed = "dust";
       break;
     case 5: //pressure
-      cmd += "&field5=";
+      feed = "pressure";
       break;
     case 6: //altitude
-      cmd += "&field6=";
+      feed = "altitude";
       break;
     case 7: //vsig
-      cmd += "&field7=";
+      feed = "vsig";
       break;
     case 8: //BPM
-      cmd += "&field8=";
+      feed = "bpm";
   }
-  //finish building command
-  cmd += val; //put value of the data we read into the cmd
-  cmd += "\r\n";
-
-  //print command to serial and send to esp8266
-  //Serial.print("AT+CIPSEND=");
-  esp8266.print("AT+CIPSEND=");
-  //Serial.println(cmd.length());
-  esp8266.println(cmd.length());
-  if(esp8266.find(">")){
-    //Serial.print(cmd);
-    esp8266.print(cmd);
-  }
-  else{
-   //Serial.println("AT+CIPCLOSE");
-   esp8266.println("AT+CIPCLOSE");
-    //Resend...
-    error=1;
-  }
+  String value = String(val);
+  String data = String("{\"value\":") + "\"" + value + "\"}";
+  String datalen = (String)(data.length());
+  //finish building http request
+  String cmd = "POST /api/feeds/" + feed + "/data?X-AIO-Key=" + AIOkey + " HTTP/1.0\n"
+  +"Host: io.adafruit.com\n"
+  +"Content-Type: application/json\n"
+  +"Content-Length: " + datalen + "\n\n"
+  + data;
+  
+  esp8266.print(cmd);
+  
   //delay(1000);
 }
 
