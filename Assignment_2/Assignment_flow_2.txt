@@ -1,0 +1,1 @@
+[{"id":"9d24635f.c2927","type":"function","z":"da212fcc.83721","name":"Temperature Warning","func":"msg.payload = \"Warning, temperature is above 20\" + \" it is \" + msg.payload + \" degrees celsius.\";\nreturn msg;","outputs":1,"noerr":0,"x":460,"y":180,"wires":[["dab768f1.222e08"]]}]
