@@ -3,21 +3,8 @@
 */
 //importing libraires
 #include<SoftwareSerial.h>
-#include <AFMotor.h>
-#include <Servo.h>
+#include<AFMotor.h>
 
-//Initialize esp8266 Wifi module
-SoftwareSerial esp8266(9,10);
-
-//Credentials for wifi connection
-#define SSID "*********"     // "SSID-WiFiname" 
-#define PASS "*********"       // "password"
-#define IP "184.106.153.149"// thingspeak.com ip
-String msg = "GET /update?key=***********"; //change it with your api key like "GET /update?key=Your Api Key"
-
-//Initialize Servo Motor
-Servo myservo;  // create servo object to control a servo
-Servo myservo2;
 
 //Initialize DC motor
 AF_DCMotor motor3(3, MOTOR12_1KHZ); 
@@ -34,24 +21,12 @@ int pos1 = 0;
 int error;
 int led = 8;
 char val;
-int flag =0;
 
 
 void setup() {
-  pinMode(led, OUTPUT);  // Digital pin 13 set as output Pin
-  Serial.begin(115200); //baudrate for Serial communication
-  esp8266.begin(115200); //baudrate for Esp8266 Wifi communication
-  myservo.attach(17);  // attaches the servo on pin 17 to the servo object
-  myservo2.attach(16); // attaches the servo on pin 16 to the servo object
+  Serial.begin(9600); //baudrate for Serial communication
   motor3.setSpeed(158); // set left DC motor speed 
   motor4.setSpeed(190); // set right DC motor speed
-  pinMode(19,INPUT); // Declare pin 19 as input
-  pinMode(18,OUTPUT); // Declare pin 18 as output
-  //Chech wifi connection 
-  if(esp8266.find("OK")){
-    connectWiFi();
-  }
-   
 }
 
 void forward() {                     // This function moves all the wheels forward 
@@ -98,26 +73,31 @@ void loop() {
      
       forward();
       delay(1000);
-	  haltMotors;
+	  haltMotors();
+   delay(1000);
     }
-  else if(val == '2') // Backward
+  else if(val == '3') // Backward
     {
  
       backward();
       delay(1000);
-	  haltMotors;
+	  haltMotors();
+   delay(1000);
     }
-  else if(val == '3') //right
+  else if(val == '4') //right
   {
 	  turnRight();
 	  delay(1000);
-	  haltMotors;
+	  haltMotors();
+   delay(1000);
   }
-  else if(val == '4') //left
+  else if(val == '2') //left
   {
 	  turnLeft();
 	  delay(1000);
-	  haltMotors;
+	  haltMotors();
+   delay(1000);
   }
+  val = 0;
 }
 
