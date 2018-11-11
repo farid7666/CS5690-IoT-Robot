@@ -1,0 +1,94 @@
+[
+    {
+        "id": "24e77825.ae09e8",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8078e8f8.b832d8",
+        "type": "firebase modify",
+        "z": "24e77825.ae09e8",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "light",
+        "method": "set",
+        "value": "msg.payload",
+        "priority": "msg.priority",
+        "x": 1687.2892608642578,
+        "y": 454.14069747924805,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f8b20c8.d83d2f",
+        "type": "http request",
+        "z": "24e77825.ae09e8",
+        "name": "Get data from thingspeak",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://api.thingspeak.com/channels/566885/field/1/last.json",
+        "tls": "",
+        "x": 832.0234375,
+        "y": 465.0390625,
+        "wires": [
+            [
+                "e6f5bfac.4d7ad"
+            ]
+        ]
+    },
+    {
+        "id": "e6f5bfac.4d7ad",
+        "type": "json",
+        "z": "24e77825.ae09e8",
+        "name": "convertToJSONobject",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1116.0234375,
+        "y": 464.0390625,
+        "wires": [
+            [
+                "93c147d8.27b748"
+            ]
+        ]
+    },
+    {
+        "id": "93c147d8.27b748",
+        "type": "function",
+        "z": "24e77825.ae09e8",
+        "name": "extractFireField",
+        "func": "msg.payload = msg.payload.field1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1325.78125,
+        "y": 464.6328125,
+        "wires": [
+            [
+                "8078e8f8.b832d8"
+            ]
+        ]
+    },
+    {
+        "id": "2874f152.5405de",
+        "type": "inject",
+        "z": "24e77825.ae09e8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "4",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 533.2812614440918,
+        "y": 467.4687919616699,
+        "wires": [
+            [
+                "f8b20c8.d83d2f"
+            ]
+        ]
+    }
+]
