@@ -1,0 +1,83 @@
+[
+    {
+        "id": "d236c2a0.4d33e",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "db9579c4.d442c8",
+        "type": "twitter out",
+        "z": "d236c2a0.4d33e",
+        "twitter": "",
+        "name": "Tweet",
+        "x": 823.2891578674316,
+        "y": 663.8672046661377,
+        "wires": []
+    },
+    {
+        "id": "70376111.ce946",
+        "type": "http in",
+        "z": "d236c2a0.4d33e",
+        "name": "",
+        "url": "/index",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 410.27345275878906,
+        "y": 468.1562957763672,
+        "wires": [
+            [
+                "d2d31e67.56214"
+            ]
+        ]
+    },
+    {
+        "id": "5fa10c15.7b1564",
+        "type": "http response",
+        "z": "d236c2a0.4d33e",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 866.2890625,
+        "y": 482.0546875,
+        "wires": []
+    },
+    {
+        "id": "d2d31e67.56214",
+        "type": "template",
+        "z": "d236c2a0.4d33e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n    <p>\n        hi\n    </p>\n</html>",
+        "output": "str",
+        "x": 626.2734489440918,
+        "y": 480.9609794616699,
+        "wires": [
+            [
+                "5fa10c15.7b1564"
+            ]
+        ]
+    },
+    {
+        "id": "ebac1d29.055db",
+        "type": "http in",
+        "z": "d236c2a0.4d33e",
+        "name": "",
+        "url": "/test",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 545.2735252380371,
+        "y": 657.1485323905945,
+        "wires": [
+            [
+                "db9579c4.d442c8"
+            ]
+        ]
+    }
+]
