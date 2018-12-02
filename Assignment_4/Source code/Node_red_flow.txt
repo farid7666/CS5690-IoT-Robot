@@ -1,0 +1,988 @@
+[
+    {
+        "id": "5d3d9a2b.fe27b4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "292490a8.fe2a7",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "extract json data",
+        "func": "\nif(msg.payload.json_data.temperature !== undefined)\n{\n    var data = msg.payload.json_data.temperature;\n    var data2 = msg.payload.json_data.humidity;\n    var msg = [];\n    msg[0] = {payload: data};\n    msg[3] = {payload: data2};\n}\nelse if(msg.payload.json_data.pressure !== undefined)\n{\n    var data = msg.payload.json_data.pressure;\n    var msg = [];\n    msg[1] = {payload: data};\n}\nelse if(msg.payload.json_data.ambient !== undefined)\n{\n    var data = msg.payload.json_data.ambient;\n    var msg = [];\n    msg[2] = {payload: data};\n}\nreturn msg;",
+        "outputs": 4,
+        "noerr": 0,
+        "x": 224.0000228881836,
+        "y": 212.00000762939453,
+        "wires": [
+            [
+                "4748bb11.d68ee4"
+            ],
+            [
+                "920990c2.79b96"
+            ],
+            [],
+            [
+                "35273823.f44488"
+            ]
+        ]
+    },
+    {
+        "id": "45046c44.efc984",
+        "type": "ui_chart",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "group": "fb34c6f0.dcb698",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "temperatureToDashboard",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 722.0000305175781,
+        "y": 50.0000114440918,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b50e475d.c764d8",
+        "type": "ui_chart",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "group": "ac179b0a.5e1818",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "pressureToDashboard",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 741.0000457763672,
+        "y": 178.0000467300415,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "84cea210.6a253",
+        "type": "ui_chart",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "group": "7e99c792.f4b748",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "humidityToDashboard",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "x": 701.0002098083496,
+        "y": 337.0002193450928,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d1ef0e60.72044",
+        "type": "sensorTag",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "sensorTag",
+        "devices": [
+            "bc6a2948f972"
+        ],
+        "temperature": true,
+        "humidity": true,
+        "pressure": true,
+        "magnetometer": false,
+        "magnetometerPeriod": "",
+        "accelerometer": false,
+        "accelerometerPeriod": "",
+        "gyroscope": false,
+        "gyroscopePeriod": "",
+        "luxometer": true,
+        "luxometerPeriod": "",
+        "keys": false,
+        "x": 65,
+        "y": 216,
+        "wires": [
+            [
+                "292490a8.fe2a7"
+            ]
+        ]
+    },
+    {
+        "id": "f82d5a7c.571e38",
+        "type": "firebase modify",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "temperatureToFirebase",
+        "firebaseconfig": "",
+        "childpath": "Temperature",
+        "method": "set",
+        "value": "msg.payload",
+        "priority": "msg.priority",
+        "x": 717.0001220703125,
+        "y": 114.7425308227539,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6bf0d9a.9a12d28",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "temperatureToThingspeak",
+        "func": "msg.url= \"https://api.thingspeak.com/update?api_key=S8NGVSFAE3O9FVAJ&field2=\"+msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1088.5391845703125,
+        "y": 98.4296989440918,
+        "wires": [
+            [
+                "c4bd33f0.d215c"
+            ]
+        ]
+    },
+    {
+        "id": "c4bd33f0.d215c",
+        "type": "http request",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1284.5313110351562,
+        "y": 96.27344512939453,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81188190.b8f6d",
+        "type": "http request",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1253.0234985351562,
+        "y": 228.0390625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "70d782db.8b581c",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "pressureToThingspeak",
+        "func": "msg.url= \"https://api.thingspeak.com/update?api_key=S8NGVSFAE3O9FVAJ&field5=\"+msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1058.031364440918,
+        "y": 232.19532585144043,
+        "wires": [
+            [
+                "81188190.b8f6d"
+            ]
+        ]
+    },
+    {
+        "id": "40340ddb.c4d7f4",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "humidityToThingspeak",
+        "func": "msg.url= \"https://api.thingspeak.com/update?api_key=S8NGVSFAE3O9FVAJ&field1=\"+msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1042.0234375,
+        "y": 374.03912353515625,
+        "wires": [
+            [
+                "98becd20.52de5"
+            ]
+        ]
+    },
+    {
+        "id": "98becd20.52de5",
+        "type": "http request",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1235.015625,
+        "y": 375.88287353515625,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4748bb11.d68ee4",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "makeOneDecimalPlace",
+        "func": "msg.payload = parseFloat(msg.payload).toFixed(1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 460.53126525878906,
+        "y": 86.42970943450928,
+        "wires": [
+            [
+                "f82d5a7c.571e38",
+                "45046c44.efc984"
+            ]
+        ]
+    },
+    {
+        "id": "920990c2.79b96",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "makeOneDecimalPlace",
+        "func": "msg.payload = parseFloat(msg.payload).toFixed(1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 492.02347564697266,
+        "y": 215.03908729553223,
+        "wires": [
+            [
+                "b50e475d.c764d8",
+                "6a7af0c4.a4318"
+            ]
+        ]
+    },
+    {
+        "id": "35273823.f44488",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "makeOneDecimalPlace",
+        "func": "msg.payload = parseFloat(msg.payload).toFixed(1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 443.02349853515625,
+        "y": 340.0390911102295,
+        "wires": [
+            [
+                "84cea210.6a253",
+                "6e8990b4.2933e"
+            ]
+        ]
+    },
+    {
+        "id": "6a7af0c4.a4318",
+        "type": "firebase modify",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "pressureToFirebase",
+        "firebaseconfig": "",
+        "childpath": "Pressure",
+        "method": "set",
+        "value": "msg.payload",
+        "priority": "msg.priority",
+        "x": 735.0234375,
+        "y": 254.0390510559082,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e8990b4.2933e",
+        "type": "firebase modify",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "humidityToFirebase",
+        "firebaseconfig": "",
+        "childpath": "Humidity",
+        "method": "set",
+        "value": "msg.payload",
+        "priority": "msg.priority",
+        "x": 679.0234375,
+        "y": 409.0390510559082,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f6be4485.112548",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "AC",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 311.2890625,
+        "y": 668.125,
+        "wires": [
+            [
+                "2b6ac20f.1e8b1e"
+            ]
+        ]
+    },
+    {
+        "id": "c1de9396.bec4",
+        "type": "rpi-gpio out",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "AC - 29",
+        "pin": "29",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 846.2891845703125,
+        "y": 680.1798095703125,
+        "wires": []
+    },
+    {
+        "id": "2b6ac20f.1e8b1e",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "checkAcOnOff",
+        "func": "if(msg.payload == \"\\\"on\\\"\")\n{\n    msg.payload = 1\n}\nelse\n{\n    msg.payload = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 663.2735290527344,
+        "y": 675.0234985351562,
+        "wires": [
+            [
+                "c1de9396.bec4"
+            ]
+        ]
+    },
+    {
+        "id": "700c268a.2570f8",
+        "type": "twilio out",
+        "z": "5d3d9a2b.fe27b4",
+        "twilio": "7c83afcc.6c602",
+        "twilioType": "sms",
+        "url": "",
+        "number": "8167776502",
+        "name": "",
+        "x": 1220.2734375,
+        "y": 1014.7656860351562,
+        "wires": []
+    },
+    {
+        "id": "83479139.5eb24",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "Humidity",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 270.28912353515625,
+        "y": 1047.0469970703125,
+        "wires": [
+            [
+                "479a301b.16132"
+            ]
+        ]
+    },
+    {
+        "id": "479a301b.16132",
+        "type": "switch",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "overThreshold",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "80",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 621.281494140625,
+        "y": 1045.5860595703125,
+        "wires": [
+            [
+                "70b2083e.413778"
+            ]
+        ]
+    },
+    {
+        "id": "538609b.df998f8",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "buildMessage",
+        "func": "msg.payload = \"Humidity is: \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1026.2890625,
+        "y": 1046.03125,
+        "wires": [
+            [
+                "700c268a.2570f8",
+                "41f7a829.a63658"
+            ]
+        ]
+    },
+    {
+        "id": "70b2083e.413778",
+        "type": "delay",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "04",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 828.0234375,
+        "y": 1045.0390625,
+        "wires": [
+            [
+                "538609b.df998f8"
+            ]
+        ]
+    },
+    {
+        "id": "6cea0304.43dfac",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "light",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 316.0234375,
+        "y": 768.0390014648438,
+        "wires": [
+            [
+                "844e1b09.29dbc8"
+            ]
+        ]
+    },
+    {
+        "id": "8ab30edb.ea1c4",
+        "type": "rpi-gpio out",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "Lights 35",
+        "pin": "35",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 903.0235595703125,
+        "y": 772.0938110351562,
+        "wires": []
+    },
+    {
+        "id": "844e1b09.29dbc8",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "checkLightsOnOff",
+        "func": "if(msg.payload == \"\\\"on\\\"\")\n{\n    msg.payload = 1\n}\nelse\n{\n    msg.payload = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 678.0079040527344,
+        "y": 774.9375,
+        "wires": [
+            [
+                "8ab30edb.ea1c4"
+            ]
+        ]
+    },
+    {
+        "id": "ac51220a.7da79",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "fan",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 328.0234375,
+        "y": 870.0390014648438,
+        "wires": [
+            [
+                "24b132af.302ece"
+            ]
+        ]
+    },
+    {
+        "id": "b72ccdfb.13cb9",
+        "type": "rpi-gpio out",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "Fans 32",
+        "pin": "32",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 905.0235595703125,
+        "y": 874.0938110351562,
+        "wires": []
+    },
+    {
+        "id": "24b132af.302ece",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "checkFansOnOff",
+        "func": "if(msg.payload == \"\\\"on\\\"\")\n{\n    msg.payload = 1\n}\nelse\n{\n    msg.payload = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690.0079040527344,
+        "y": 876.9375,
+        "wires": [
+            [
+                "b72ccdfb.13cb9"
+            ]
+        ]
+    },
+    {
+        "id": "e034d96a.a92568",
+        "type": "inject",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "Fire loop",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 118.2890625,
+        "y": 563.453125,
+        "wires": [
+            [
+                "7dda864e.dfd1f8"
+            ]
+        ]
+    },
+    {
+        "id": "7dda864e.dfd1f8",
+        "type": "http request",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "Get data from thingspeak",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://api.thingspeak.com/channels/566885/field/3/last.json",
+        "tls": "",
+        "x": 318.02349853515625,
+        "y": 560.0391235351562,
+        "wires": [
+            [
+                "e8a31316.11c66"
+            ]
+        ]
+    },
+    {
+        "id": "e8a31316.11c66",
+        "type": "json",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "convertToJSONobject",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 564.53125,
+        "y": 562.4296875,
+        "wires": [
+            [
+                "feb2bde1.9cadf"
+            ]
+        ]
+    },
+    {
+        "id": "feb2bde1.9cadf",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "extractFireField",
+        "func": "msg.payload = msg.payload.field3\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 774.2890625,
+        "y": 563.0234375,
+        "wires": [
+            [
+                "5fa2f2d4.9cd66c"
+            ]
+        ]
+    },
+    {
+        "id": "5a479f60.2b974",
+        "type": "delay",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "3",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 1132.0234375,
+        "y": 568.0390625,
+        "wires": [
+            [
+                "be73b519.8c9618"
+            ]
+        ]
+    },
+    {
+        "id": "be73b519.8c9618",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "buildMessage",
+        "func": "msg.payload = \"THERE IS A FIRE\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1336.2890625,
+        "y": 550.0313110351562,
+        "wires": [
+            [
+                "cecec94c.20c5f8",
+                "fe0a344a.dd43d8"
+            ]
+        ]
+    },
+    {
+        "id": "cecec94c.20c5f8",
+        "type": "twilio out",
+        "z": "5d3d9a2b.fe27b4",
+        "twilio": "7c83afcc.6c602",
+        "twilioType": "sms",
+        "url": "",
+        "number": "8167776502",
+        "name": "",
+        "x": 1520.2734375,
+        "y": 460.76568603515625,
+        "wires": []
+    },
+    {
+        "id": "5fa2f2d4.9cd66c",
+        "type": "switch",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "checkIfFire",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 942.5,
+        "y": 567,
+        "wires": [
+            [
+                "5a479f60.2b974"
+            ]
+        ]
+    },
+    {
+        "id": "41f7a829.a63658",
+        "type": "e-mail",
+        "z": "5d3d9a2b.fe27b4",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "kentonhanifl@gmail.com",
+        "dname": "",
+        "x": 1278.289306640625,
+        "y": 1079.43017578125,
+        "wires": []
+    },
+    {
+        "id": "fe0a344a.dd43d8",
+        "type": "e-mail",
+        "z": "5d3d9a2b.fe27b4",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "kentonhanifl@gmail.com",
+        "dname": "",
+        "x": 1557.0234375,
+        "y": 626.0390014648438,
+        "wires": []
+    },
+    {
+        "id": "c8da61f4.00b0f",
+        "type": "twilio out",
+        "z": "5d3d9a2b.fe27b4",
+        "twilio": "7c83afcc.6c602",
+        "twilioType": "sms",
+        "url": "",
+        "number": "8167776502",
+        "name": "",
+        "x": 1210.984375,
+        "y": 1182,
+        "wires": []
+    },
+    {
+        "id": "af052b39.10bb58",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "Temperature",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 271,
+        "y": 1220.28125,
+        "wires": [
+            [
+                "35a5679c.146da8"
+            ]
+        ]
+    },
+    {
+        "id": "35a5679c.146da8",
+        "type": "switch",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "overThreshold",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "33",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 631.9923706054688,
+        "y": 1218.8203125,
+        "wires": [
+            [
+                "de7e08b6.2ea768"
+            ]
+        ]
+    },
+    {
+        "id": "384e0f64.7e7fa",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "buildMessage",
+        "func": "msg.payload = \"Temperature is: \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1025,
+        "y": 1211.265625,
+        "wires": [
+            [
+                "c8da61f4.00b0f",
+                "1d82b870.8ddf18"
+            ]
+        ]
+    },
+    {
+        "id": "de7e08b6.2ea768",
+        "type": "delay",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "04",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 832.7343139648438,
+        "y": 1218.2734375,
+        "wires": [
+            [
+                "384e0f64.7e7fa"
+            ]
+        ]
+    },
+    {
+        "id": "1d82b870.8ddf18",
+        "type": "e-mail",
+        "z": "5d3d9a2b.fe27b4",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "kentonhanifl@gmail.com",
+        "dname": "",
+        "x": 1261.0001220703125,
+        "y": 1246.6644287109375,
+        "wires": []
+    },
+    {
+        "id": "c2066101.341db",
+        "type": "twilio out",
+        "z": "5d3d9a2b.fe27b4",
+        "twilio": "7c83afcc.6c602",
+        "twilioType": "sms",
+        "url": "",
+        "number": "8167776502",
+        "name": "",
+        "x": 1204,
+        "y": 1362,
+        "wires": []
+    },
+    {
+        "id": "f0d9007d.4ef92",
+        "type": "firebase.on",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "firebaseconfig": "",
+        "childpath": "Pressure",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 306.0155944824219,
+        "y": 1408.28125,
+        "wires": [
+            [
+                "aa7c514f.e2528"
+            ]
+        ]
+    },
+    {
+        "id": "aa7c514f.e2528",
+        "type": "switch",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "overThreshold",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "2000",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 645.0079689025879,
+        "y": 1406.8203125,
+        "wires": [
+            [
+                "8c3ab084.956e7"
+            ]
+        ]
+    },
+    {
+        "id": "f2120d6d.93641",
+        "type": "function",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "buildMessage",
+        "func": "msg.payload = \"Pressure is: \" + msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1028.0155639648438,
+        "y": 1409.265625,
+        "wires": [
+            [
+                "c2066101.341db",
+                "6bbe72a4.622ffc"
+            ]
+        ]
+    },
+    {
+        "id": "8c3ab084.956e7",
+        "type": "delay",
+        "z": "5d3d9a2b.fe27b4",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "04",
+        "rateUnits": "hour",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "s"
+	}
+]
